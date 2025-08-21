@@ -12,38 +12,25 @@ const colors = {
 addColors(colors);
 
 const uppercaseFormat = format((info) => {
-  info.originalLevel = info.level;
   info.level = info.level.toUpperCase();
   return info;
 });
 
-const consoleFormat = format.printf(
-  ({ timestamp, level, message, metadata }) => {
-    const timeOnly = (timestamp as string).split(" ")[1];
-    const metaString =
-      metadata && Object.keys(metadata).length
-        ? `${JSON.stringify(metadata)}`
-        : "";
-    return `${timeOnly} [${level}] ${message} ${metaString}`;
-  }
-);
-
-const baseFormat = format.combine(
-  format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
-  format.splat(),
-  format.metadata({ fillExcept: ["timestamp", "level", "message", "stack"] })
-);
+const customFormat = format.printf(({ timestamp, level, message }) => {
+  return `${timestamp} ${level} [LMS]: ${message}`;
+});
 
 export const logger = createLogger({
   level: "info",
-  format: baseFormat,
+  format: format.combine(
+    format.timestamp({ format: () => new Date().toISOString() }),
+    uppercaseFormat(),
+    format.splat(),
+    format.metadata({ fillExcept: ["timestamp", "level", "message", "stack"] })
+  ),
   transports: [
     new transports.Console({
-      format: format.combine(
-        uppercaseFormat(),
-        format.colorize(),
-        consoleFormat
-      ),
+      format: format.combine(format.colorize(), customFormat),
     }),
     new DailyRotateFile({
       filename: "logs/%DATE%-combined.log",
@@ -52,7 +39,7 @@ export const logger = createLogger({
       maxSize: "20m",
       maxFiles: "14d",
       level: "info",
-      format: format.json(),
+      format: format.combine(customFormat),
     }),
     new DailyRotateFile({
       filename: "logs/%DATE%-error.log",
@@ -61,7 +48,7 @@ export const logger = createLogger({
       maxSize: "20m",
       maxFiles: "30d",
       level: "error",
-      format: format.json(),
+      format: format.combine(customFormat),
     }),
   ],
 

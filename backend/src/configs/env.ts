@@ -1,7 +1,8 @@
+import { configDotenv } from "dotenv";
 import { z } from "zod";
+
 import { logger } from "@/configs/logger";
 import { NodeEnv } from "@/utils/constants";
-import { configDotenv } from "dotenv";
 
 configDotenv();
 
@@ -21,6 +22,8 @@ const envSchema = z.object({
 
   GOOGLE_CLIENT_ID: nonEmptyString("GOOGLE_CLIENT_ID"),
   GOOGLE_CLIENT_SECRET: nonEmptyString("GOOGLE_CLIENT_SECRET"),
+
+  RESEND_API_KEY: nonEmptyString("RESEND_API_KEY"),
 });
 
 const createEnv = (env: NodeJS.ProcessEnv) => {

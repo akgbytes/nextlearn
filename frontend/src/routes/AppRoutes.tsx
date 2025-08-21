@@ -9,9 +9,10 @@ import AdminLayout from "@/layouts/AdminLayout";
 
 import HomePage from "@/pages/HomePage";
 import LoginPage from "@/pages/LoginPage";
-import RegisterPage from "@/pages/RegisterPage";
 import DashboardPage from "@/pages/Dashboard";
 import AdminPage from "@/pages/AdminPage";
+import VerifyEmailPage from "@/pages/VerifyEmailPage";
+import RegisterPage from "@/pages/RegisterPage";
 
 const AppRoutes = () => {
   return (
@@ -19,6 +20,7 @@ const AppRoutes = () => {
       {/* Auth routes */}
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/verify-email" element={<VerifyEmailPage />} />
         <Route path="/register" element={<RegisterPage />} />
       </Route>
 

@@ -1,5 +1,5 @@
-import { ApiError } from "@/utils/ApiError";
 import { ZodError } from "zod";
+import { ApiError } from "@/utils/ApiError";
 
 export const handleZodError = <T>(
   result: { success: true; data: T } | { success: false; error: ZodError }

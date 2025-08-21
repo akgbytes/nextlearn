@@ -17,24 +17,25 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 
-import { z } from "zod";
+import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { useTransition } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 
-import { signIn } from "@/lib/auth-client";
+import { signIn, signUp } from "@/lib/auth-client";
 
 import { Loader2, Send } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 
 const formSchema = z.object({
+  name: z.string().min(1, { error: "Name is required" }),
   email: z.email(),
   password: z.string().min(1, { error: "Password is required" }),
 });
 
-const LoginForm = () => {
+const RegisterForm = () => {
   const [isGoogleLoginPending, startGoogleLoginTransition] = useTransition();
 
   type FormData = z.infer<typeof formSchema>;
@@ -42,24 +43,24 @@ const LoginForm = () => {
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = async ({ email, password }: FormData) => {
-    await signIn.email({
+  const onSubmit = async ({ name, email, password }: FormData) => {
+    await signUp.email({
+      name,
       email,
       password,
-      callbackURL: import.meta.env.VITE_FRONTEND_URL,
+      callbackURL: `${
+        import.meta.env.VITE_FRONTEND_URL
+      }/verify-email?email=${email}`,
 
       fetchOptions: {
-        onSuccess: () => {
-          toast.success("Logged in successfully");
-        },
         onError: (ctx) => {
-          if (ctx.error.status === 403) alert("Please verify your email");
-          else toast.error(ctx.error.message || "Error while login");
+          toast.error(ctx.error.message || "Internal Server Error");
         },
       },
     });
@@ -76,9 +77,8 @@ const LoginForm = () => {
               "Signed in with Google successfully, you will be redirected soon..."
             );
           },
-          onError: ({ error }) => {
-            console.log("error while logging in google: ", error);
-            toast.error(error.message || "Internal Server Error");
+          onError: (ctx) => {
+            toast.error(ctx.error.message || "Internal Server Error");
           },
         },
       });
@@ -124,6 +124,26 @@ const LoginForm = () => {
                 <span className="relative z-10 bg-card px-2 text-muted-foreground">
                   Or continue with
                 </span>
+              </div>
+
+              <div className="grid gap-3">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Name</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="text"
+                          placeholder="Aman Gupta"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
 
               <div className="grid gap-3">
@@ -186,14 +206,14 @@ const LoginForm = () => {
 
               <div className="text-center text-sm">
                 <span className="text-muted-foreground">
-                  Dont&apos;t have an account?{" "}
+                  Already have an account?{" "}
                 </span>
 
                 <Link
-                  to="/register"
+                  to="/login"
                   className="underline underline-offset-4 font-medium"
                 >
-                  Sign up
+                  Sign in
                 </Link>
               </div>
             </div>
@@ -204,4 +224,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

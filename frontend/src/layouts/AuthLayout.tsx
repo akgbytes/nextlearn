@@ -2,14 +2,14 @@ import { Link, Outlet } from "react-router";
 
 const AuthLayout = () => {
   return (
-    <div className="relative flex min-h-svh flex-col items-center justify-center">
+    <div className="flex min-h-svh flex-col items-center justify-center">
       <div className="flex w-full max-w-md flex-col gap-4">
         <Link
           to="/"
           className="flex items-center gap-2 self-center font-medium"
         >
           <img src="/logo.svg" alt="logo" className="size-10" />
-          CourseMate
+          <span className="text-2xl">CourseMate</span>
         </Link>
         <Outlet />
         <div className="text-balance text-center text-xs text-muted-foreground">
