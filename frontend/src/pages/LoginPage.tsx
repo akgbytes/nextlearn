@@ -1,13 +1,7 @@
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import LoginForm from "@/features/auth/components/LoginForm";
 
 const LoginPage = () => {
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-xl">Welcome Back</CardTitle>
-      </CardHeader>
-    </Card>
-  );
+  return <LoginForm />;
 };
 
 export default LoginPage;
