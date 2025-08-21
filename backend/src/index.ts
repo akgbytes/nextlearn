@@ -1,5 +1,9 @@
 import app from "@/app.js";
+import { logger } from "@/configs/logger";
+import { env } from "@/configs/env";
 
-app.listen(8080, () => {
-  console.log(`Server running on port 8080`);
+const PORT = env.PORT;
+
+app.listen(PORT, () => {
+  logger.info(`Server running on port ${PORT}`);
 });

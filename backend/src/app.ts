@@ -2,12 +2,13 @@ import express from "express";
 import cors from "cors";
 import { toNodeHandler } from "better-auth/node";
 import { auth } from "@/lib/auth.js";
+import { env } from "@/configs/env";
 
 const app = express();
 
 app.use(
   cors({
-    origin: "",
+    origin: env.FRONTEND_URL,
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
