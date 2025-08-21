@@ -1,4 +1,6 @@
-import { ModeToggle } from "./components/mode-toggle";
+import { ModeToggle } from "@/components/mode-toggle";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 function App() {
   return (
@@ -29,6 +31,15 @@ function App() {
           blanditiis aperiam impedit sequi iure consectetur incidunt ratione
           modi? Quas dolor fuga nobis quisquam dolorem? Aspernatur debitis rerum
           perferendis quaerat quam ab doloribus minima in cum.
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <Button onClick={() => toast("Hello there")}>Start Now</Button>
+          <Button variant={"destructive"}>Logout</Button>
+          <Button variant={"ghost"}>Login</Button>
+          <Button variant={"secondary"}>Pay Now</Button>
+          <Button variant={"outline"}>Get Started</Button>
+          <Button variant={"link"}>Mark as completed</Button>
         </div>
 
         <div>
