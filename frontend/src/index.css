@@ -41,7 +41,6 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-/* #569601 */
 :root {
   --radius: 0.65rem;
   --background: oklch(1 0 0);
