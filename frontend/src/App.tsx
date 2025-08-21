@@ -1,3 +1,5 @@
+import { ModeToggle } from "./components/mode-toggle";
+
 function App() {
   return (
     <>
@@ -29,7 +31,9 @@ function App() {
           perferendis quaerat quam ab doloribus minima in cum.
         </div>
 
-        <div></div>
+        <div>
+          <ModeToggle />
+        </div>
       </div>
     </>
   );
