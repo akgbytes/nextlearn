@@ -17,7 +17,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 
 import { useSignOut } from "@/hooks/use-signout";
 
@@ -28,22 +28,14 @@ interface UserButtonProps {
 }
 
 const UserButton = ({ name, email, image }: UserButtonProps) => {
-  const navigate = useNavigate();
   const handleSignOut = useSignOut();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="h-auto p-0 hover:bg-transparent">
-          <Avatar>
-            <AvatarImage src={image} alt="Profile image" />
-            <AvatarFallback>{name[0].toUpperCase()}</AvatarFallback>
-          </Avatar>
-          <ChevronDownIcon
-            size={16}
-            className="opacity-60"
-            aria-hidden="true"
-          />
-        </Button>
+        <Avatar>
+          <AvatarImage src={image} alt="Profile image" />
+          <AvatarFallback>{name[0].toUpperCase()}</AvatarFallback>
+        </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="max-w-64 mt-1">
         <DropdownMenuLabel className="p-0 font-normal">
