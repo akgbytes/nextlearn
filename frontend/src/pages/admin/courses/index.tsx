@@ -1,5 +1,18 @@
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { Link } from "react-router";
+
 const AdminCourses = () => {
-  return <div className="px-4 md:px-6">CreateCourse</div>;
+  return (
+    <>
+      <div className="flex items-center justify-between">
+        <h2 className="text-2xl font-bold">Your Courses</h2>
+        <Link to="/admin/courses/create" className={cn(buttonVariants())}>
+          Create Course
+        </Link>
+      </div>
+    </>
+  );
 };
 
 export default AdminCourses;

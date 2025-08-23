@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 import { Link } from "react-router";
 
-const HomePage = () => {
+const Home = () => {
   return (
     <>
       <section className="relative py-20">
@@ -62,4 +62,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Home;

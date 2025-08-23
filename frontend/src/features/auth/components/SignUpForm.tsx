@@ -29,19 +29,19 @@ import { signIn, signUp } from "@/lib/auth-client";
 import { Loader2, Send } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 
-const formSchema = z.object({
+const signUpFormSchema = z.object({
   name: z.string().min(1, { error: "Name is required" }),
   email: z.email(),
   password: z.string().min(1, { error: "Password is required" }),
 });
 
+type SignUpFormValues = z.infer<typeof signUpFormSchema>;
+
 const SignUpForm = () => {
   const [isGoogleLoginPending, startGoogleLoginTransition] = useTransition();
 
-  type FormData = z.infer<typeof formSchema>;
-
-  const form = useForm<FormData>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<SignUpFormValues>({
+    resolver: zodResolver(signUpFormSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -49,7 +49,7 @@ const SignUpForm = () => {
     },
   });
 
-  const onSubmit = async ({ name, email, password }: FormData) => {
+  const onSubmit = async ({ name, email, password }: SignUpFormValues) => {
     await signUp.email({
       name,
       email,
@@ -142,9 +142,7 @@ const SignUpForm = () => {
                     </FormItem>
                   )}
                 />
-              </div>
 
-              <div className="grid gap-3">
                 <FormField
                   control={form.control}
                   name="email"
@@ -162,9 +160,7 @@ const SignUpForm = () => {
                     </FormItem>
                   )}
                 />
-              </div>
 
-              <div className="grid gap-3">
                 <FormField
                   control={form.control}
                   name="password"
