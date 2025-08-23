@@ -30,8 +30,8 @@ import {
   SelectContent,
   SelectItem,
   SelectValue,
+  SelectTrigger,
 } from "@/components/ui/select";
-import { SelectTrigger } from "@radix-ui/react-select";
 
 export const courseFormSchema = z.object({
   title: z
@@ -64,7 +64,7 @@ export const courseFormSchema = z.object({
     .min(1, { error: "Duration must be at least 1 hour" })
     .max(300, { error: "Duration must be at most 500 hours" }),
 
-  category: z.enum(courseCategories, { error: "Invalid category" }),
+  category: z.string().min(1, { error: "Category is required" }),
 
   slug: z
     .string()
@@ -73,9 +73,9 @@ export const courseFormSchema = z.object({
       error: "Slug can only contain lowercase letters, numbers, and hyphens",
     }),
 
-  level: z.enum(courseLevel, { error: "Invalid level" }),
+  level: z.string().min(1, { error: "Level is required" }),
 
-  status: z.enum(courseStatus, { error: "Invalid status" }),
+  status: z.string().min(1, { error: "Status is required" }),
 });
 
 export type CourseFormValues = z.infer<typeof courseFormSchema>;
@@ -90,10 +90,10 @@ const CourseCreation = () => {
       fileKey: "",
       price: 0,
       duration: 1,
-      category: "IT & Software",
+      category: "",
       slug: "",
-      level: "Beginner",
-      status: "Draft",
+      level: "",
+      status: "",
     },
   });
 
@@ -102,6 +102,7 @@ const CourseCreation = () => {
   return (
     <>
       <h2 className="text-2xl font-bold">Create Course</h2>
+
       <Card>
         <CardHeader>
           <CardTitle>Basic Information</CardTitle>
@@ -224,7 +225,7 @@ const CourseCreation = () => {
                         onValueChange={field.onChange}
                         defaultValue={field.value}
                       >
-                        <FormControl className="border">
+                        <FormControl>
                           <SelectTrigger className="w-full">
                             <SelectValue placeholder="Select category" />
                           </SelectTrigger>
@@ -252,7 +253,7 @@ const CourseCreation = () => {
                         onValueChange={field.onChange}
                         defaultValue={field.value}
                       >
-                        <FormControl className="border">
+                        <FormControl>
                           <SelectTrigger className="w-full">
                             <SelectValue placeholder="Select course level" />
                           </SelectTrigger>
@@ -309,7 +310,7 @@ const CourseCreation = () => {
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
-                      <FormControl className="border">
+                      <FormControl>
                         <SelectTrigger className="w-full">
                           <SelectValue placeholder="Select Status" />
                         </SelectTrigger>
