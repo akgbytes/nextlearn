@@ -74,7 +74,7 @@ const RegisterForm = () => {
         fetchOptions: {
           onSuccess: () => {
             toast.success(
-              "Signed in with Google successfully, you will be redirected soon..."
+              "Signed in with Google, you will be redirected soon..."
             );
           },
           onError: (ctx) => {
