@@ -22,7 +22,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { useTransition } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 
 import { signIn } from "@/lib/auth-client";
 
@@ -34,7 +34,7 @@ const formSchema = z.object({
   password: z.string().min(1, { error: "Password is required" }),
 });
 
-const LoginForm = () => {
+const SignInForm = () => {
   const [isGoogleLoginPending, startGoogleLoginTransition] = useTransition();
 
   type FormData = z.infer<typeof formSchema>;
@@ -55,11 +55,11 @@ const LoginForm = () => {
 
       fetchOptions: {
         onSuccess: () => {
-          toast.success("Logged in successfully");
+          toast.success("Signed in successfully");
         },
         onError: (ctx) => {
           if (ctx.error.status === 403) alert("Please verify your email");
-          else toast.error(ctx.error.message || "Error while login");
+          else toast.error(ctx.error.message || "Failed to sign in");
         },
       },
     });
@@ -72,12 +72,9 @@ const LoginForm = () => {
         callbackURL: `${import.meta.env.VITE_FRONTEND_URL}`,
         fetchOptions: {
           onSuccess: () => {
-            toast.success(
-              "Signed in with Google, you will be redirected soon..."
-            );
+            toast.success("Signed in with Google, redirecting...");
           },
           onError: ({ error }) => {
-            console.log("error while logging in google: ", error);
             toast.error(error.message || "Internal Server Error");
           },
         },
@@ -190,7 +187,7 @@ const LoginForm = () => {
                 </span>
 
                 <Link
-                  to="/register"
+                  to="/signup"
                   className="underline underline-offset-4 font-medium"
                 >
                   Sign up
@@ -204,4 +201,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default SignInForm;

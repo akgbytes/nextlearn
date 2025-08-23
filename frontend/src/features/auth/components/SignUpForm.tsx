@@ -35,7 +35,7 @@ const formSchema = z.object({
   password: z.string().min(1, { error: "Password is required" }),
 });
 
-const RegisterForm = () => {
+const SignUpForm = () => {
   const [isGoogleLoginPending, startGoogleLoginTransition] = useTransition();
 
   type FormData = z.infer<typeof formSchema>;
@@ -73,9 +73,7 @@ const RegisterForm = () => {
         callbackURL: `${import.meta.env.VITE_FRONTEND_URL}`,
         fetchOptions: {
           onSuccess: () => {
-            toast.success(
-              "Signed in with Google, you will be redirected soon..."
-            );
+            toast.success("Signed in with Google, redirecting...");
           },
           onError: (ctx) => {
             toast.error(ctx.error.message || "Internal Server Error");
@@ -210,7 +208,7 @@ const RegisterForm = () => {
                 </span>
 
                 <Link
-                  to="/login"
+                  to="/signin"
                   className="underline underline-offset-4 font-medium"
                 >
                   Sign in
@@ -224,4 +222,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default SignUpForm;

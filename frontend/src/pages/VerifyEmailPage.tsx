@@ -56,7 +56,7 @@ const VerifyEmailPage = () => {
       fetchOptions: {
         onSuccess: () => {
           setStatus("success");
-          setTimeout(() => navigate("/login"), 2000);
+          setTimeout(() => navigate("/signin"), 2000);
           toast.success("Email verified successfully");
         },
         onError: (ctx) => {

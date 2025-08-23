@@ -5,6 +5,8 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import UserButton from "@/components/user-button";
 
+import Logo from "/logo.svg";
+
 type NavigationLink = {
   name: string;
   to: string;
@@ -34,7 +36,7 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4 md:px-6 lg:px-8 flex min-h-16 items-center">
         <Link to="" className="flex items-center space-x-2 mr-4">
-          <img src="/logo.svg" className="size-8" />
+          <img src={Logo} className="size-7" />
           <span className="font-bold">Elevera</span>
         </Link>
 
@@ -64,12 +66,12 @@ const Navbar = () => {
             ) : (
               <>
                 <Link
-                  to="/login"
+                  to="/signin"
                   className={cn(buttonVariants({ variant: "outline" }))}
                 >
-                  Login
+                  Sign in
                 </Link>
-                <Link to="/login" className={cn(buttonVariants())}>
+                <Link to="/dashboard" className={cn(buttonVariants())}>
                   Get Started
                 </Link>
               </>

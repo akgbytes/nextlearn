@@ -18,8 +18,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Link, useNavigate } from "react-router";
-import { signOut } from "@/lib/auth-client";
-import { toast } from "sonner";
+
+import { useSignOut } from "@/hooks/use-signout";
 
 interface UserButtonProps {
   name: string;
@@ -29,19 +29,7 @@ interface UserButtonProps {
 
 const UserButton = ({ name, email, image }: UserButtonProps) => {
   const navigate = useNavigate();
-  const logout = () => {
-    signOut({
-      fetchOptions: {
-        onSuccess: () => {
-          navigate("/");
-          toast.success("Logged out successfully");
-        },
-        onError: () => {
-          toast.success("Failed to logout");
-        },
-      },
-    });
-  };
+  const handleSignOut = useSignOut();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -57,43 +45,45 @@ const UserButton = ({ name, email, image }: UserButtonProps) => {
           />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="max-w-64">
-        <DropdownMenuLabel className="flex min-w-0 flex-col">
-          <span className="text-foreground truncate text-sm font-medium">
-            {name}
-          </span>
-          <span className="text-muted-foreground truncate text-xs font-normal">
-            {email}
-          </span>
+      <DropdownMenuContent align="end" className="max-w-64 mt-1">
+        <DropdownMenuLabel className="p-0 font-normal">
+          <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+            <Avatar className="h-8 w-8 rounded-lg">
+              <AvatarImage src={image} alt={name} />
+              <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+            </Avatar>
+            <div className="grid flex-1 text-left text-sm leading-tight">
+              <span className="truncate font-medium">{name}</span>
+              <span className="text-muted-foreground truncate text-xs">
+                {email}
+              </span>
+            </div>
+          </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
             <Link to="/">
-              <Home size={16} className="opacity-60" aria-hidden="true" />
+              <Home size={16} aria-hidden="true" />
               <span>Home</span>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link to="/courses">
-              <BookOpen size={16} className="opacity-60" aria-hidden="true" />
+              <BookOpen size={16} aria-hidden="true" />
               <span>Courses</span>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link to="/dashboard">
-              <LayoutDashboard
-                size={16}
-                className="opacity-60"
-                aria-hidden="true"
-              />
+              <LayoutDashboard size={16} aria-hidden="true" />
               <span>Dashboard</span>
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={logout}>
-          <LogOutIcon size={16} className="opacity-60" aria-hidden="true" />
+        <DropdownMenuItem onClick={handleSignOut}>
+          <LogOutIcon size={16} aria-hidden="true" />
           <span>Logout</span>
         </DropdownMenuItem>
       </DropdownMenuContent>

@@ -8,20 +8,22 @@ import MainLayout from "@/layouts/MainLayout";
 import AdminLayout from "@/layouts/AdminLayout";
 
 import HomePage from "@/pages/HomePage";
-import LoginPage from "@/pages/LoginPage";
+
 import DashboardPage from "@/pages/Dashboard";
 import AdminPage from "@/pages/AdminPage";
 import VerifyEmailPage from "@/pages/VerifyEmailPage";
-import RegisterPage from "@/pages/RegisterPage";
+
+import SignInPage from "@/pages/SignInPage";
+import SignUpPage from "@/pages/SignUpPage";
 
 const AppRoutes = () => {
   return (
     <Routes>
       {/* Auth routes */}
       <Route element={<AuthLayout />}>
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signin" element={<SignInPage />} />
         <Route path="/verify-email" element={<VerifyEmailPage />} />
-        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
       </Route>
 
       {/* Protected user routes */}
