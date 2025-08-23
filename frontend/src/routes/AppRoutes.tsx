@@ -7,14 +7,15 @@ import AuthLayout from "@/layouts/AuthLayout";
 import MainLayout from "@/layouts/MainLayout";
 import AdminLayout from "@/layouts/AdminLayout";
 
-import HomePage from "@/pages/HomePage";
-
+import HomePage from "@/pages/home/HomePage";
 import DashboardPage from "@/pages/Dashboard";
-import AdminPage from "@/pages/AdminPage";
-import VerifyEmailPage from "@/pages/VerifyEmailPage";
 
-import SignInPage from "@/pages/SignInPage";
-import SignUpPage from "@/pages/SignUpPage";
+import SignUpPage from "@/pages/auth/signup";
+import SignInPage from "@/pages/auth/signin";
+import VerifyEmailPage from "@/pages/auth/verify-email";
+
+import AdminPage from "@/pages/admin";
+import Courses from "@/pages/admin/courses";
 
 const AppRoutes = () => {
   return (
@@ -39,6 +40,7 @@ const AppRoutes = () => {
         <Route element={<AdminRoute />}>
           <Route element={<AdminLayout />}>
             <Route path="/admin" element={<AdminPage />} />
+            <Route path="/admin/courses" element={<Courses />} />
           </Route>
         </Route>
       </Route>

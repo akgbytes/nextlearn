@@ -11,9 +11,9 @@ import {
   IconUsers,
 } from "@tabler/icons-react";
 
-import { NavMain } from "@/components/nav-main";
-import { NavSecondary } from "@/components/nav-secondary";
-import { NavUser } from "@/components/nav-user";
+import { NavMain } from "@/features/admin/components/nav-main";
+import { NavSecondary } from "@/features/admin/components/nav-secondary";
+import { NavUser } from "@/features/admin/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -125,7 +125,7 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="offcanvas" {...props}>
+    <Sidebar className="border-r" collapsible="offcanvas" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -135,7 +135,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             >
               <Link to="#">
                 <img src={Logo} className="size-7" />
-                <span className="text-base font-semibold">Elevera</span>
+                <span className="text-base font-semibold">NextLearn</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>

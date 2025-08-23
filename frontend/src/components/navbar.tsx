@@ -37,7 +37,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4 md:px-6 lg:px-8 flex min-h-16 items-center">
         <Link to="" className="flex items-center space-x-2 mr-4">
           <img src={Logo} className="size-7" />
-          <span className="font-bold">Elevera</span>
+          <span className="font-bold">nextlearn</span>
         </Link>
 
         {/* navigation links */}

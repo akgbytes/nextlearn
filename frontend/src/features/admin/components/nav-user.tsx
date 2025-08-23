@@ -1,10 +1,4 @@
-import {
-  IconCreditCard,
-  IconDotsVertical,
-  IconLogout,
-  IconNotification,
-  IconUserCircle,
-} from "@tabler/icons-react";
+import { IconDotsVertical, IconLogout } from "@tabler/icons-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -28,6 +22,7 @@ import { Link } from "react-router";
 import { BookOpen, HomeIcon, LayoutGrid } from "lucide-react";
 
 import { useSignOut } from "@/hooks/use-signout";
+import { fallbackAvatarUrl } from "@/lib/constants";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
@@ -37,6 +32,8 @@ export function NavUser() {
   if (isPending || !auth) {
     return null;
   }
+
+  const fallbackUrl = fallbackAvatarUrl(auth.user.name);
 
   return (
     <SidebarMenu>
@@ -49,10 +46,7 @@ export function NavUser() {
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage
-                  src={
-                    auth.user.image ||
-                    `https://avatar.vercel.sh/${auth.user.name}`
-                  }
+                  src={auth.user.image || fallbackUrl}
                   alt={auth?.user.name}
                 />
                 <AvatarFallback className="rounded-lg">
@@ -78,11 +72,8 @@ export function NavUser() {
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage
-                    src={
-                      auth.user.image ||
-                      `https://avatar.vercel.sh/${auth.user.name}`
-                    }
-                    alt={auth?.user.name}
+                    src={auth.user.image || fallbackUrl}
+                    alt={auth.user.name}
                   />
                   <AvatarFallback className="rounded-lg">
                     {auth.user.name[0].toUpperCase()}

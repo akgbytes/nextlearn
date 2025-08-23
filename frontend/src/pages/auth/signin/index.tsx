@@ -1,6 +1,6 @@
 import SignInForm from "@/features/auth/components/SignInForm";
-const SignInPage = () => {
+const SignIn = () => {
   return <SignInForm />;
 };
 
-export default SignInPage;
+export default SignIn;

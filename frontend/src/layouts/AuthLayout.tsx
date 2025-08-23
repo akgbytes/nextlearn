@@ -9,7 +9,7 @@ const AuthLayout = () => {
           className="flex items-center gap-2 self-center font-medium"
         >
           <img src="/logo.svg" alt="logo" className="size-10" />
-          <span className="text-2xl">CourseMate</span>
+          <span className="text-2xl">NextLearn</span>
         </Link>
         <Outlet />
         <div className="text-balance text-center text-xs text-muted-foreground">

@@ -11,7 +11,7 @@ import {
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 
-const VerifyEmailPage = () => {
+const VerifyEmail = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
@@ -91,4 +91,4 @@ const VerifyEmailPage = () => {
   );
 };
 
-export default VerifyEmailPage;
+export default VerifyEmail;
