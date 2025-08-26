@@ -33,6 +33,7 @@ import {
   SelectTrigger,
 } from "@/components/ui/select";
 import Tiptap from "@/components/text-editor/tiptap";
+import Uploader from "@/components/file-uploader/uploader";
 
 export const courseFormSchema = z.object({
   title: z
@@ -188,11 +189,6 @@ const CourseCreation = () => {
                     <FormLabel>Description</FormLabel>
                     <FormControl>
                       <Tiptap field={field} />
-                      {/* <Textarea
-                        placeholder="Small description"
-                        className="min-h-[120px]"
-                        {...field}
-                      /> */}
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -206,10 +202,7 @@ const CourseCreation = () => {
                   <FormItem>
                     <FormLabel>Thumbnail Image</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="Paste image URL or upload"
-                        {...field}
-                      />
+                      <Uploader />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
