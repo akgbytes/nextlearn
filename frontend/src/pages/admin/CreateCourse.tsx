@@ -32,6 +32,7 @@ import {
   SelectValue,
   SelectTrigger,
 } from "@/components/ui/select";
+import Tiptap from "@/components/text-editor/tiptap";
 
 export const courseFormSchema = z.object({
   title: z
@@ -186,11 +187,12 @@ const CourseCreation = () => {
                   <FormItem>
                     <FormLabel>Description</FormLabel>
                     <FormControl>
-                      <Textarea
+                      <Tiptap />
+                      {/* <Textarea
                         placeholder="Small description"
                         className="min-h-[120px]"
                         {...field}
-                      />
+                      /> */}
                     </FormControl>
                     <FormMessage />
                   </FormItem>

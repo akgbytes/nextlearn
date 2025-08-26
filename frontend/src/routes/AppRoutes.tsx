@@ -7,16 +7,16 @@ import AuthLayout from "@/layouts/AuthLayout";
 import MainLayout from "@/layouts/MainLayout";
 import AdminLayout from "@/layouts/AdminLayout";
 
-import Home from "@/pages/home";
-import Dashboard from "@/pages/dashboard";
+import Home from "@/pages/Home";
+import Dashboard from "@/pages/Dashboard";
 
-import SignUp from "@/pages/auth/signup";
-import SignIn from "@/pages/auth/signin";
-import VerifyEmail from "@/pages/auth/verify-email";
+import SignUp from "@/pages/auth/SignUp";
+import SignIn from "@/pages/auth/SignIn";
+import VerifyEmail from "@/pages/auth/VerifyEmail";
 
-import AdminDashboard from "@/pages/admin";
-import AdminCourses from "@/pages/admin/courses";
-import CourseCreation from "@/pages/admin/courses/create";
+import AdminDashboard from "@/pages/admin/AdminDashboard";
+import AdminCourses from "@/pages/admin/AdminCourses";
+import CourseCreation from "@/pages/admin/CreateCourse";
 
 const AppRoutes = () => {
   return (
