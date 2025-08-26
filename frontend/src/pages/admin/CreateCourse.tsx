@@ -187,7 +187,7 @@ const CourseCreation = () => {
                   <FormItem>
                     <FormLabel>Description</FormLabel>
                     <FormControl>
-                      <Tiptap />
+                      <Tiptap field={field} />
                       {/* <Textarea
                         placeholder="Small description"
                         className="min-h-[120px]"

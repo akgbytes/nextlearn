@@ -34,7 +34,7 @@ const Menubar = ({ editor }: MenubarProps) => {
   }
 
   return (
-    <div className="border border-input rounded p-2 bg-card flex flex-wrap gap-1 items-center">
+    <div className="border border-input border-x-0 border-t-0 rounded p-2 bg-card flex flex-wrap gap-1 items-center">
       <TooltipProvider>
         <div className="flex flex-wrap gap-1">
           <EditorToggleButton

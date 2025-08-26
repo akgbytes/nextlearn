@@ -37,6 +37,7 @@ const UserButton = ({ name, email, image }: UserButtonProps) => {
           <AvatarFallback>{name[0].toUpperCase()}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
+      {/* maybe isko min-w-48 krna pde */}
       <DropdownMenuContent align="end" className="max-w-64 mt-1">
         <DropdownMenuLabel className="p-0 font-normal">
           <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
