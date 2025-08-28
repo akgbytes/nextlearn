@@ -14,10 +14,20 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
 app.use(express.urlencoded({ extended: true }));
 
 app.all("/api/auth/*splat", toNodeHandler(auth));
 
 app.use(express.json());
+
+import healthRoute from "./routes/health.route";
+import S3Routes from "./routes/s3.route";
+import { errorHandler } from "./middlewares/error.middleware";
+
+app.use("/api/v1/health", healthRoute);
+app.use("/api/v1/s3", S3Routes);
+app.use("/api/v1/course");
+app.use(errorHandler);
 
 export default app;
