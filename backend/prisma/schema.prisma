@@ -86,7 +86,7 @@ model Course {
   title            String
   description      String
   shortDescription String
-  fileKey          String
+  thumbnail        String
   price            Int
   duration         Int
   category         String

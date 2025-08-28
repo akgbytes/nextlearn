@@ -9,9 +9,16 @@ const app = express();
 app.use(
   cors({
     origin: env.FRONTEND_URL,
-    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
-    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "x-uploadthing-package",
+      "x-uploadthing-version",
+      "traceparent",
+      "b3",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   })
 );
 
@@ -22,13 +29,12 @@ app.all("/api/auth/*splat", toNodeHandler(auth));
 app.use(express.json());
 
 import healthRoute from "@/routes/health.route";
-import S3Routes from "./routes/S3.route";
+
 import { errorHandler } from "@/middlewares/error.middleware";
 import { createRouteHandler } from "uploadthing/express";
 import { fileRouter } from "@/lib/uploadthing";
 
 app.use("/api/v1/health", healthRoute);
-app.use("/api/v1/s3", S3Routes);
 app.use(
   "/api/uploadthing",
   createRouteHandler({

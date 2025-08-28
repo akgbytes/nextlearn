@@ -31,9 +31,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Tiptap from "@/components/text-editor/tiptap";
-import Uploader from "@/components/file-uploader/uploader";
 
 import { Plus, Sparkle } from "lucide-react";
+import { Uploader } from "@/components/file-uploader/uploader";
 
 export const courseFormSchema = z.object({
   title: z
