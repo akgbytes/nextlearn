@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDropzone, type FileRejection } from "react-dropzone";
 
+import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { cn } from "@/lib/utils";
 
@@ -13,6 +14,7 @@ import {
   RenderUploadedState,
   RenderUploadingState,
 } from "./render-state";
+import { useUploadFileMutation } from "@/features/admin/adminApi";
 
 interface UploaderState {
   id: string | null;
@@ -32,6 +34,7 @@ interface UploaderProps {
 }
 
 const Uploader = ({ value, onChange }: UploaderProps) => {
+  const [uploadFile, { isLoading }] = useUploadFileMutation();
   const [fileState, setFileState] = useState<UploaderState>({
     error: false,
     file: null,
@@ -62,13 +65,13 @@ const Uploader = ({ value, onChange }: UploaderProps) => {
           fileType: "image",
         });
 
-        uploadFile(file);
+        uploadFileHandler(file);
       }
     },
     [fileState.objectUrl]
   );
 
-  async function uploadFile(file: File) {
+  async function uploadFileHandler(file: File) {
     setFileState((prev) => ({
       ...prev,
       uploading: true,
@@ -76,61 +79,45 @@ const Uploader = ({ value, onChange }: UploaderProps) => {
     }));
 
     try {
-      const response = await fetch("/api/s3/upload", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          fileName: file.name,
-          contentType: file.type,
-          size: file.size,
-          isImage: true,
-        }),
-      });
+      const response = await uploadFile({
+        fileName: file.name,
+        contentType: file.type,
+        size: file.size,
+        isImage: true,
+      }).unwrap();
 
-      const { presignedUrl, key } = await response.json();
+      console.log("server ka response: ", response);
 
-      await new Promise<void>((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.upload.onprogress = (event) => {
-          if (event.lengthComputable) {
-            const completedPercentage = (event.loaded / event.total) * 100;
+      console.log("file :", file);
 
+      const { presignedUrl, key } = response.data;
+
+      await axios.put(presignedUrl, file, {
+        onUploadProgress: (event) => {
+          if (event.total) {
+            const percent = Math.round((event.loaded * 100) / event.total);
+            console.log("running, progress: ", percent);
             setFileState((prev) => ({
               ...prev,
-              progress: Math.round(completedPercentage),
+              progress: percent,
             }));
           }
-        };
-
-        xhr.onload = () => {
-          if (xhr.status === 200 || xhr.status === 204) {
-            setFileState((prev) => ({
-              ...prev,
-              progress: 100,
-              uploading: false,
-              key,
-            }));
-
-            onChange?.(key);
-
-            toast.success("File uploaded successfully");
-
-            resolve();
-          } else {
-            reject(new Error("Upload failed"));
-          }
-        };
-
-        xhr.onerror = () => {
-          reject(new Error("Upload failed"));
-        };
-
-        xhr.open("PUT", presignedUrl);
-        xhr.setRequestHeader("Content-Type", file.type);
-        xhr.send(file);
+        },
       });
+
+      setFileState((prev) => ({
+        ...prev,
+        progress: 100,
+        uploading: false,
+        key,
+      }));
+
+      onChange?.(key);
+
+      toast.success("File uploaded successfully");
     } catch (error) {
-      toast.error("Failed to get presigned URL");
+      console.log("error while upload: ", error);
+      toast.error("Failed to upload file");
 
       setFileState((prev) => ({
         ...prev,

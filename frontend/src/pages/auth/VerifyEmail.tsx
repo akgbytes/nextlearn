@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router";
+
 import { sendVerificationEmail, verifyEmail } from "@/lib/auth-client";
+
 import {
   Card,
   CardContent,
@@ -8,8 +10,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 const VerifyEmail = () => {
   const [searchParams] = useSearchParams();

@@ -1,3 +1,11 @@
+import { useTransition } from "react";
+import { Link } from "react-router";
+
+import { signIn } from "@/lib/auth-client";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+
 import {
   Card,
   CardContent,
@@ -16,15 +24,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-
-import { useTransition } from "react";
-import { Link } from "react-router";
-
-import { signIn } from "@/lib/auth-client";
 
 import { Loader2, Send } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";

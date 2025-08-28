@@ -1,3 +1,10 @@
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+
+import slugify from "slugify";
+import { courseCategories, courseLevel, courseStatus } from "@/lib/constants";
+
 import {
   Card,
   CardContent,
@@ -5,26 +12,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-
-import * as z from "zod";
-import { courseCategories, courseLevel, courseStatus } from "@/lib/constants";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Plus, Sparkle } from "lucide-react";
-import slugify from "slugify";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -32,8 +28,12 @@ import {
   SelectValue,
   SelectTrigger,
 } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import Tiptap from "@/components/text-editor/tiptap";
 import Uploader from "@/components/file-uploader/uploader";
+
+import { Plus, Sparkle } from "lucide-react";
 
 export const courseFormSchema = z.object({
   title: z
@@ -48,10 +48,10 @@ export const courseFormSchema = z.object({
   shortDescription: z
     .string()
     .min(5, {
-      error: "Small description must be at least 25 characters long",
+      error: "Short description must be at least 25 characters long",
     })
     .max(160, {
-      error: "Small description must be at most 250 characters long",
+      error: "Short description must be at most 250 characters long",
     }),
 
   fileKey: z.string().min(1, { error: "File is required" }),

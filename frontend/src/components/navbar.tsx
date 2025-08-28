@@ -1,7 +1,9 @@
 import { Link } from "react-router";
-import { ModeToggle } from "@/components/mode-toggle";
+
 import { useSession } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
+
+import { ModeToggle } from "@/components/mode-toggle";
 import { buttonVariants } from "@/components/ui/button";
 import UserButton from "@/components/user-button";
 

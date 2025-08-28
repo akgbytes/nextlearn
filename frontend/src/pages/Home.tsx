@@ -1,11 +1,11 @@
+import { Link } from "react-router";
+
+import { cn } from "@/lib/utils";
+import { features } from "@/data/features";
+
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { features } from "@/data/features";
-
-import { cn } from "@/lib/utils";
-
-import { Link } from "react-router";
 
 const Home = () => {
   return (

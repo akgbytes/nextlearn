@@ -1,13 +1,7 @@
-import {
-  BookOpen,
-  ChevronDownIcon,
-  Home,
-  LayoutDashboard,
-  LogOutIcon,
-} from "lucide-react";
+import { Link } from "react-router";
+import { useSignOut } from "@/hooks/use-signout";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,9 +11,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Link } from "react-router";
 
-import { useSignOut } from "@/hooks/use-signout";
+import { BookOpen, Home, LayoutDashboard, LogOutIcon } from "lucide-react";
 
 interface UserButtonProps {
   name: string;
@@ -37,7 +30,7 @@ const UserButton = ({ name, email, image }: UserButtonProps) => {
           <AvatarFallback>{name[0].toUpperCase()}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      {/* maybe isko min-w-48 krna pde */}
+      {/* might change width to min-w-48*/}
       <DropdownMenuContent align="end" className="max-w-64 mt-1">
         <DropdownMenuLabel className="p-0 font-normal">
           <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">

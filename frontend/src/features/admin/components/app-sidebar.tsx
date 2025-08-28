@@ -1,15 +1,5 @@
 import * as React from "react";
-import {
-  IconCamera,
-  IconChartBar,
-  IconFileAi,
-  IconFileDescription,
-  IconFolder,
-  IconHelp,
-  IconSearch,
-  IconSettings,
-  IconUsers,
-} from "@tabler/icons-react";
+import { Link } from "react-router";
 
 import { NavMain } from "@/features/admin/components/nav-main";
 import { NavSecondary } from "@/features/admin/components/nav-secondary";
@@ -23,7 +13,18 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Link } from "react-router";
+
+import {
+  IconCamera,
+  IconChartBar,
+  IconFileAi,
+  IconFileDescription,
+  IconFolder,
+  IconHelp,
+  IconSearch,
+  IconSettings,
+  IconUsers,
+} from "@tabler/icons-react";
 
 import Logo from "/logo.svg";
 import { BookOpen, LayoutGrid } from "lucide-react";

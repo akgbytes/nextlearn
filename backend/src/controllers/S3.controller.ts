@@ -22,8 +22,6 @@ export const UploadOnS3 = asyncHandler(async (req, res) => {
 
   const command = new PutObjectCommand({
     Bucket: env.AWS_S3_BUCKET_NAME_IMAGES,
-    ContentType: contentType,
-    ContentLength: size,
     Key: uniqueKey,
   });
 

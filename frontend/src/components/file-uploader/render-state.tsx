@@ -19,11 +19,8 @@ export const RenderEmptyState = ({
           )}
         />
       </div>
-      <p className="text-base font-semibold text-foreground">
-        Drop you file here or{" "}
-        <span className="text-primary font-bold cursor-pointer">
-          click to upload
-        </span>
+      <p className="text-base font-medium text-foreground">
+        Drop you file here or Click to upload
       </p>
       <Button className="mt-4" type="button">
         Select File

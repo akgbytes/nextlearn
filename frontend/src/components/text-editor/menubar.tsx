@@ -13,17 +13,20 @@ import {
   AlignCenter,
   AlignLeft,
   AlignRight,
-  Bold,
   Heading1,
   Heading2,
   Heading3,
-  Italic,
   List,
   ListOrdered,
   Redo,
-  Strikethrough,
   Undo,
 } from "lucide-react";
+
+import {
+  AiOutlineStrikethrough,
+  AiOutlineBold,
+  AiOutlineItalic,
+} from "react-icons/ai";
 
 interface MenubarProps {
   editor: Editor | null;
@@ -41,19 +44,19 @@ const Menubar = ({ editor }: MenubarProps) => {
           <EditorToggleButton
             pressed={editor.isActive("bold")}
             onPressedChange={() => editor.chain().focus().toggleBold().run()}
-            icon={<Bold />}
+            icon={<AiOutlineBold />}
             tooltip="Bold"
           />
           <EditorToggleButton
             pressed={editor.isActive("italic")}
             onPressedChange={() => editor.chain().focus().toggleItalic().run()}
-            icon={<Italic />}
+            icon={<AiOutlineItalic />}
             tooltip="Italic"
           />
           <EditorToggleButton
             pressed={editor.isActive("strike")}
             onPressedChange={() => editor.chain().focus().toggleStrike().run()}
-            icon={<Strikethrough />}
+            icon={<AiOutlineStrikethrough />}
             tooltip="Strike"
           />
           <EditorToggleButton

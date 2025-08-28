@@ -13,5 +13,3 @@ const MainLayout = () => {
 };
 
 export default MainLayout;
-
-//  className="mx-auto max-w-7xl px-6 lg:px-8 space-y-20"
