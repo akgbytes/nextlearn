@@ -1,9 +1,13 @@
-import { type Editor } from "@tiptap/react";
 import type { ReactNode } from "react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import { Toggle } from "../ui/toggle";
 
 import { cn } from "@/lib/utils";
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Toggle } from "@/components/ui/toggle";
 
 interface EditorToggleButtonProps {
   pressed: boolean;

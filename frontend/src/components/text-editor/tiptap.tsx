@@ -2,9 +2,17 @@ import { useEditor, EditorContent } from "@tiptap/react";
 
 import StarterKit from "@tiptap/starter-kit";
 import TextAlign from "@tiptap/extension-text-align";
-import Menubar from "./menubar";
 
-const Tiptap = ({ field }: { field: any }) => {
+import Menubar from "@/components/text-editor/menubar";
+
+interface TiptapProps {
+  field: {
+    value: string;
+    onChange: (value: string) => void;
+  };
+}
+
+const Tiptap = ({ field }: TiptapProps) => {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -16,7 +24,7 @@ const Tiptap = ({ field }: { field: any }) => {
     editorProps: {
       attributes: {
         class:
-          "min-h-[300px] p-4 focus:outline-none prose prose-sm sm:prose lg:prose-lg xl:prose-xl dark:prose-invert !w-full !max-w-none",
+          "min-h-[300px] p-4 focus:outline-none prose prose-sm sm:prose dark:prose-invert !w-full !max-w-none !leading-1",
       },
     },
 
@@ -26,7 +34,7 @@ const Tiptap = ({ field }: { field: any }) => {
       field.onChange(JSON.stringify(editor.getJSON()));
     },
 
-    content: field.value ? JSON.parse(field.value) : "<p>Hello World</p>",
+    content: field.value ? JSON.parse(field.value) : "<p>Start writing...</p>",
   });
 
   return (

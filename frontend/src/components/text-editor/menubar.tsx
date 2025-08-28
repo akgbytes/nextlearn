@@ -1,10 +1,14 @@
 import { type Editor } from "@tiptap/react";
+
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../ui/tooltip";
+} from "@/components/ui/tooltip";
+import { Button } from "@/components/ui/button";
+import EditorToggleButton from "@/components/text-editor/editor-toggle-button";
+
 import {
   AlignCenter,
   AlignLeft,
@@ -20,9 +24,6 @@ import {
   Strikethrough,
   Undo,
 } from "lucide-react";
-
-import EditorToggleButton from "./editor-toggle-button";
-import { Button } from "../ui/button";
 
 interface MenubarProps {
   editor: Editor | null;

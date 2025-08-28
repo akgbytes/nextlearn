@@ -10,7 +10,7 @@
   --background: oklch(0.9911 0 0);
   --foreground: oklch(0.2046 0 0);
   --card: oklch(0.9911 0 0);
-  --card-foreground: oklch(0.2046 0 0);
+  --card-foreground: oklch(20.463% 0.00002 271.152);
   --popover: oklch(0.9911 0 0);
   --popover-foreground: oklch(0.4386 0 0);
   --primary: oklch(0.8348 0.1302 160.908);
@@ -64,7 +64,7 @@
   --background: oklch(0.1822 0 0);
   --foreground: oklch(0.9288 0.0126 255.5078);
   --card: oklch(0.2046 0 0);
-  --card-foreground: oklch(0.9288 0.0126 255.5078);
+  --card-foreground: oklch(92.876% 0.01272 255.643);
   --popover: oklch(0.2603 0 0);
   --popover-foreground: oklch(0.7348 0 0);
   --primary: oklch(0.4365 0.1044 156.7556);
@@ -180,4 +180,19 @@
     @apply bg-background text-foreground;
     letter-spacing: var(--tracking-normal);
   }
+}
+
+.prose ul,
+.prose ol {
+  @apply list-outside;
+}
+
+.prose ul > li::marker,
+.prose ol > li::marker {
+  @apply text-[#171717];
+}
+
+.dark .prose ul > li::marker,
+.dark .prose ol > li::marker {
+  @apply text-[#e2e8f0];
 }

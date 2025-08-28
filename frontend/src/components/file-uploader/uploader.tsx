@@ -1,15 +1,18 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDropzone, type FileRejection } from "react-dropzone";
-import { Card, CardContent } from "../ui/card";
+
+import { v4 as uuidv4 } from "uuid";
 import { cn } from "@/lib/utils";
+
+import { Card, CardContent } from "@/components/ui/card";
+import { toast } from "sonner";
+
 import {
   RenderEmptyState,
   RenderErrorState,
   RenderUploadedState,
   RenderUploadingState,
 } from "./render-state";
-import { toast } from "sonner";
-import { v4 as uuidv4 } from "uuid";
 
 interface UploaderState {
   id: string | null;
