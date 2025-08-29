@@ -1,10 +1,12 @@
 export class ApiResponse<T> {
-  public success: boolean;
+  public readonly success: boolean;
+
   constructor(
-    public code: number,
-    public message: string,
-    public data: T
+    public readonly statusCode: number,
+    public readonly message: string,
+    public readonly data: T,
+    public readonly meta?: Record<string, unknown>
   ) {
-    this.success = code < 400;
+    this.success = statusCode < 400;
   }
 }

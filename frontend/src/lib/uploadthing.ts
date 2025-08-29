@@ -1,5 +1,6 @@
 import { generateReactHelpers } from "@uploadthing/react";
+import { BASE_URL } from "./constants";
 
 export const { useUploadThing, uploadFiles } = generateReactHelpers<any>({
-  url: "http://localhost:8080/api/v1/uploadthing",
+  url: `${BASE_URL}/uploadthing`,
 });

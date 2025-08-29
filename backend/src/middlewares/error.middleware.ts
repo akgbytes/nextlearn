@@ -17,7 +17,6 @@ export const errorHandler = (
 ): void => {
   let apiError: ApiError;
 
-  // Prisma Known Request Errors
   if (error instanceof PrismaClientKnownRequestError) {
     switch (error.code) {
       case "P2000":
@@ -252,8 +251,8 @@ export const errorHandler = (
     logError(apiError, req);
   }
 
-  res.status(apiError.code).json({
-    code: apiError.code,
+  res.status(apiError.statusCode).json({
+    code: apiError.statusCode,
     message: apiError.message,
     data: apiError.data,
     success: apiError.success,

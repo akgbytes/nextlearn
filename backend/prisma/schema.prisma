@@ -86,7 +86,7 @@ model Course {
   title            String
   description      String
   shortDescription String
-  thumbnail        String
+  thumbnailUrl     String
   price            Int
   duration         Int
   category         String

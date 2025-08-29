@@ -12,7 +12,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -28,6 +27,7 @@ import {
   SelectValue,
   SelectTrigger,
 } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Tiptap from "@/components/text-editor/tiptap";
@@ -54,7 +54,7 @@ export const courseFormSchema = z.object({
       error: "Short description must be at most 250 characters long",
     }),
 
-  fileKey: z.string().min(1, { error: "File is required" }),
+  thumbnailUrl: z.string().min(1, { error: "Thumbnail is required" }),
 
   price: z.coerce
     .number<number>()
@@ -89,7 +89,7 @@ const CourseCreation = () => {
       title: "",
       description: "",
       shortDescription: "",
-      fileKey: "",
+      thumbnailUrl: "",
       price: 0,
       duration: 1,
       category: "",
@@ -104,7 +104,6 @@ const CourseCreation = () => {
   return (
     <>
       <h2 className="text-2xl font-bold">Create Course</h2>
-
       <Card>
         <CardHeader>
           <CardTitle>Basic Information</CardTitle>
@@ -197,7 +196,7 @@ const CourseCreation = () => {
 
               <FormField
                 control={form.control}
-                name="fileKey"
+                name="thumbnailUrl"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Thumbnail Image</FormLabel>

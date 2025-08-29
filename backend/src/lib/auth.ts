@@ -10,6 +10,17 @@ export const auth = betterAuth({
     provider: "postgresql",
   }),
 
+  user: {
+    additionalFields: {
+      role: {
+        type: "string",
+        required: false,
+        defaultValue: "user",
+        input: false, // don't allow user to set role
+      },
+    },
+  },
+
   socialProviders: {
     google: {
       clientId: env.GOOGLE_CLIENT_ID,
