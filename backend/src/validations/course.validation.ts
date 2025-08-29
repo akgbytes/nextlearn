@@ -1,6 +1,7 @@
+import { CourseLevel, CourseStatus } from "@/generated/prisma/enums";
 import * as z from "zod";
 
-export const courseFormSchema = z.object({
+export const createCourseSchema = z.object({
   title: z
     .string()
     .min(3, { error: "Title must be at least 3 characters long" })
@@ -8,14 +9,14 @@ export const courseFormSchema = z.object({
 
   description: z
     .string()
-    .min(10, { error: "Description must be at least 50 characters long" }),
+    .min(50, { error: "Description must be at least 50 characters long" }),
 
   shortDescription: z
     .string()
-    .min(5, {
+    .min(25, {
       error: "Short description must be at least 25 characters long",
     })
-    .max(160, {
+    .max(250, {
       error: "Short description must be at most 250 characters long",
     }),
 
@@ -24,12 +25,12 @@ export const courseFormSchema = z.object({
   price: z.coerce
     .number<number>()
     .int()
-    .positive({ error: "Price cannot be negative" }),
+    .positive({ error: "Price must be not be negative" }),
 
   duration: z.coerce
     .number<number>()
     .min(1, { error: "Duration must be at least 1 hour" })
-    .max(300, { error: "Duration must be at most 500 hours" }),
+    .max(500, { error: "Duration must be at most 500 hours" }),
 
   category: z.string().min(1, { error: "Category is required" }),
 
@@ -40,7 +41,20 @@ export const courseFormSchema = z.object({
       error: "Slug can only contain lowercase letters, numbers, and hyphens",
     }),
 
-  level: z.string().min(1, { error: "Level is required" }),
+  level: z.enum(CourseLevel, {
+    error: (issue): string =>
+      `Invalid level, expected ${Object.values(CourseLevel)}, received ${
+        issue.input
+      }`,
+  }),
 
-  status: z.string().min(1, { error: "Status is required" }),
+  status: z.enum(CourseStatus, {
+    error: (issue): string =>
+      `Invalid status, expected ${Object.values(CourseStatus)}, received ${
+        issue.input
+      }`,
+  }),
 });
+
+export const validateCreateCourse = (data: unknown) =>
+  createCourseSchema.safeParse(data);

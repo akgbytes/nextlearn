@@ -44,6 +44,7 @@ app.use(
 );
 
 app.use("/api/v1/uploadthing", uploadThingRoute);
+app.use("/api/v1/courses");
 
 app.use(errorHandler);
 
