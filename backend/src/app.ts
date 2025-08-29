@@ -29,6 +29,7 @@ app.all("/api/auth/*splat", toNodeHandler(auth));
 app.use(express.json());
 
 import healthRoute from "@/routes/health.route";
+import uploadThingRoute from "@/routes/uploadthing.route";
 
 import { errorHandler } from "@/middlewares/error.middleware";
 import { createRouteHandler } from "uploadthing/express";
@@ -36,11 +37,13 @@ import { fileRouter } from "@/lib/uploadthing";
 
 app.use("/api/v1/health", healthRoute);
 app.use(
-  "/api/uploadthing",
+  "/api/v1/uploadthing",
   createRouteHandler({
     router: fileRouter,
   })
 );
+
+app.use("/api/v1/uploadthing", uploadThingRoute);
 
 app.use(errorHandler);
 

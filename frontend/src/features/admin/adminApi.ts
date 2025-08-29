@@ -4,25 +4,18 @@ import type { ApiResponse } from "@/types/course";
 
 const adminApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    uploadFile: builder.mutation<
-      ApiResponse<{
-        presignedUrl: string;
-        key: string;
-      }>,
+    deleteFile: builder.mutation<
+      ApiResponse<null>,
       {
-        fileName: string;
-        contentType: string;
-        size: number;
-        isImage: boolean;
+        key: string;
       }
     >({
-      query: (data) => ({
-        url: `${BASE_URL}/s3/upload`,
-        method: "POST",
-        body: data,
+      query: ({ key }) => ({
+        url: `${BASE_URL}/uploadthing/file/${key}`,
+        method: "DELETE",
       }),
     }),
   }),
 });
 
-export const { useUploadFileMutation } = adminApi;
+export const { useDeleteFileMutation } = adminApi;
