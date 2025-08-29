@@ -8,6 +8,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  admin
+  user
+}
+
 model User {
   id            String    @id
   name          String
@@ -19,6 +24,7 @@ model User {
   sessions      Session[]
   accounts      Account[]
   courses       Course[]
+  role          UserRole  @default(user)
 
   @@unique([email])
   @@map("user")
