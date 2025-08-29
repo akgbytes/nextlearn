@@ -33,7 +33,7 @@ import { Textarea } from "@/components/ui/textarea";
 import Tiptap from "@/components/text-editor/tiptap";
 
 import { Plus, Sparkle } from "lucide-react";
-import { Uploader } from "@/components/file-uploader/uploader";
+import { Uploader } from "@/components/uploader";
 
 export const courseFormSchema = z.object({
   title: z
