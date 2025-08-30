@@ -2,13 +2,24 @@ export const BASE_URL = `${import.meta.env.VITE_BACKEND_URL}/api/v1`;
 export const fallbackAvatarUrl = (name: string) =>
   `https://avatar.vercel.sh/${name}`;
 
-export const courseLevel = ["Beginner", "Intermediate", "Advanced"];
-export type CourseLevel = (typeof courseLevel)[number];
+export const UserRole = {
+  admin: "admin",
+  user: "user",
+} as const;
 
-export const courseStatus = ["Draft", "Published", "Archieved"];
-export type CourseStatus = (typeof courseStatus)[number];
+export const CourseLevel = {
+  beginner: "beginner",
+  intermediate: "intermediate",
+  advanced: "advanced",
+} as const;
 
-export const courseCategories = [
+export const CourseStatus = {
+  draft: "draft",
+  published: "published",
+  archieved: "archieved",
+} as const;
+
+export const CourseCategory = [
   "Development",
   "Business",
   "Finance",
@@ -21,5 +32,3 @@ export const courseCategories = [
   "Music",
   "Teaching",
 ] as const;
-
-export type CourseCategory = (typeof courseCategories)[number];

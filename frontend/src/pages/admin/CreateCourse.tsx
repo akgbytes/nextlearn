@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
 import slugify from "slugify";
-import { courseCategories, courseLevel, courseStatus } from "@/lib/constants";
+import { CourseCategory, CourseLevel, CourseStatus } from "@/lib/constants";
 
 import {
   Card,
@@ -34,6 +34,8 @@ import Tiptap from "@/components/text-editor/tiptap";
 
 import { Plus, Sparkle } from "lucide-react";
 import { Uploader } from "@/components/uploader";
+import { toast } from "sonner";
+import { capitalize } from "@/utils/capitalize";
 
 export const courseFormSchema = z.object({
   title: z
@@ -43,14 +45,14 @@ export const courseFormSchema = z.object({
 
   description: z
     .string()
-    .min(10, { error: "Description must be at least 50 characters long" }),
+    .min(50, { error: "Description must be at least 50 characters long" }),
 
   shortDescription: z
     .string()
-    .min(5, {
+    .min(25, {
       error: "Short description must be at least 25 characters long",
     })
-    .max(160, {
+    .max(250, {
       error: "Short description must be at most 250 characters long",
     }),
 
@@ -58,15 +60,17 @@ export const courseFormSchema = z.object({
 
   price: z.coerce
     .number<number>()
-    .int()
-    .positive({ error: "Price cannot be negative" }),
+    .min(0, { error: "Price must be not be negative" }),
 
   duration: z.coerce
     .number<number>()
     .min(1, { error: "Duration must be at least 1 hour" })
-    .max(300, { error: "Duration must be at most 500 hours" }),
+    .max(500, { error: "Duration must be at most 500 hours" }),
 
-  category: z.string().min(1, { error: "Category is required" }),
+  category: z.enum(CourseCategory, {
+    error: (issue): string =>
+      `Invalid level, expected ${CourseCategory}, received ${issue.input}`,
+  }),
 
   slug: z
     .string()
@@ -75,9 +79,19 @@ export const courseFormSchema = z.object({
       error: "Slug can only contain lowercase letters, numbers, and hyphens",
     }),
 
-  level: z.string().min(1, { error: "Level is required" }),
+  level: z.enum(CourseLevel, {
+    error: (issue) =>
+      `Invalid level, Expected ${Object.values(CourseLevel).join(
+        " | "
+      )}, Received ${issue.input}`,
+  }),
 
-  status: z.string().min(1, { error: "Status is required" }),
+  status: z.enum(CourseStatus, {
+    error: (issue) =>
+      `Invalid level, Expected ${Object.values(CourseStatus).join(
+        " | "
+      )}, Received ${issue.input}`,
+  }),
 });
 
 export type CourseFormValues = z.infer<typeof courseFormSchema>;
@@ -92,10 +106,10 @@ const CourseCreation = () => {
       thumbnailUrl: "",
       price: 0,
       duration: 1,
-      category: "",
+      category: "Teaching",
       slug: "",
-      level: "",
-      status: "",
+      level: "beginner",
+      status: "draft",
     },
   });
 
@@ -138,28 +152,37 @@ const CourseCreation = () => {
                   render={({ field }) => (
                     <FormItem className="w-full">
                       <FormLabel>Course URL Slug</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Used in the course URL, must be unique"
-                          {...field}
-                        />
-                      </FormControl>
+
+                      <div className="flex gap-4">
+                        <FormControl>
+                          <Input
+                            placeholder="Used in the course URL, must be unique"
+                            {...field}
+                          />
+                        </FormControl>
+
+                        <Button
+                          type="button"
+                          className="w-fit"
+                          onClick={() => {
+                            const title = form.getValues("title");
+                            if (!title || title.length < 2) {
+                              return toast.error("Fill a valid title first");
+                            }
+                            const slug = slugify(title, { lower: true });
+                            form.setValue("slug", slug, {
+                              shouldValidate: true,
+                            });
+                          }}
+                        >
+                          Generate Slug <Sparkle className="size-4 ml-1" />
+                        </Button>
+                      </div>
+
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-
-                <Button
-                  type="button"
-                  className="w-fit"
-                  onClick={() => {
-                    const title = form.getValues("title");
-                    const slug = slugify(title, { lower: true });
-                    form.setValue("slug", slug, { shouldValidate: true });
-                  }}
-                >
-                  Generate Slug <Sparkle className="size-4 ml-1" />
-                </Button>
               </div>
 
               <FormField
@@ -225,7 +248,7 @@ const CourseCreation = () => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {courseCategories.map((category) => (
+                          {CourseCategory.map((category) => (
                             <SelectItem key={category} value={category}>
                               {category}
                             </SelectItem>
@@ -253,9 +276,9 @@ const CourseCreation = () => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {courseLevel.map((level) => (
+                          {Object.values(CourseLevel).map((level) => (
                             <SelectItem key={level} value={level}>
-                              {level}
+                              {capitalize(level)}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -310,9 +333,9 @@ const CourseCreation = () => {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {courseStatus.map((status) => (
+                        {Object.values(CourseStatus).map((status) => (
                           <SelectItem key={status} value={status}>
-                            {status}
+                            {capitalize(status)}
                           </SelectItem>
                         ))}
                       </SelectContent>

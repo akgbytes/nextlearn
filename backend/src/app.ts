@@ -30,6 +30,7 @@ app.use(express.json());
 
 import healthRoute from "@/routes/health.route";
 import uploadThingRoute from "@/routes/uploadthing.route";
+import courseRoute from "@/routes/course.route";
 
 import { errorHandler } from "@/middlewares/error.middleware";
 import { createRouteHandler } from "uploadthing/express";
@@ -44,7 +45,7 @@ app.use(
 );
 
 app.use("/api/v1/uploadthing", uploadThingRoute);
-app.use("/api/v1/courses");
+app.use("/api/v1/courses", courseRoute);
 
 app.use(errorHandler);
 
