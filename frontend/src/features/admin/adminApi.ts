@@ -1,6 +1,7 @@
 import { api } from "@/app/api";
 import { BASE_URL } from "@/lib/constants";
-import type { ApiResponse } from "@/types/course";
+import type { CourseFormValues } from "@/pages/admin/CreateCourse";
+import type { ApiResponse, Course } from "@/types";
 
 const adminApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -15,7 +16,15 @@ const adminApi = api.injectEndpoints({
         method: "DELETE",
       }),
     }),
+
+    createCourse: builder.mutation<ApiResponse<Course>, CourseFormValues>({
+      query: (data) => ({
+        url: `${BASE_URL}/courses`,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useDeleteFileMutation } = adminApi;
+export const { useDeleteFileMutation, useCreateCourseMutation } = adminApi;
