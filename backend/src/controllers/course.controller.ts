@@ -33,4 +33,28 @@ export const getCourses = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, "All courses fetched successfully", courses));
 });
 
+export const getCourse = asyncHandler(async (req, res) => {
+  const user = req.user;
+  if (!user) throw new ApiError(401, "Unauthorized");
+
+  const { id: courseId } = req.params;
+
+  if (!courseId) {
+    throw new ApiError(400, "Course ID is required");
+  }
+  const course = await prisma.course.findUnique({
+    where: {
+      id: courseId,
+    },
+  });
+
+  if (!course) {
+    throw new ApiError(404, "Course not found");
+  }
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, "Course fetched successfully", course));
+});
+
 const example = asyncHandler(async (req, res) => {});
