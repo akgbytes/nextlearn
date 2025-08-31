@@ -20,4 +20,17 @@ export const createCourse = asyncHandler(async (req, res) => {
     .json(new ApiResponse(201, "Course created successfully", newCourse));
 });
 
+export const getCourses = asyncHandler(async (req, res) => {
+  const user = req.user;
+  if (!user) throw new ApiError(401, "Unauthorized");
+
+  const courses = await prisma.course.findMany({
+    orderBy: { createdAt: "desc" },
+  });
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, "All courses fetched successfully", courses));
+});
+
 const example = asyncHandler(async (req, res) => {});
