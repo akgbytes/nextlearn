@@ -2,6 +2,7 @@ import { api } from "@/app/api";
 import { BASE_URL } from "@/lib/constants";
 import type { CourseFormValues } from "@/pages/admin/CreateCourse";
 import type { ApiResponse, Course } from "@/types";
+import type { data } from "react-router";
 
 const adminApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -21,6 +22,17 @@ const adminApi = api.injectEndpoints({
       query: (data) => ({
         url: `${BASE_URL}/courses`,
         method: "POST",
+        body: data,
+      }),
+    }),
+
+    updateCourse: builder.mutation<
+      ApiResponse<Course>,
+      CourseFormValues & { id: string }
+    >({
+      query: ({ id, ...data }) => ({
+        url: `${BASE_URL}/courses/${id}`,
+        method: "PUT",
         body: data,
       }),
     }),
@@ -45,6 +57,7 @@ export const {
   useDeleteFileMutation,
   useCreateCourseMutation,
   useGetCoursesQuery,
-  useLazyGetCourseQuery,
   useGetCourseQuery,
+  useLazyGetCourseQuery,
+  useUpdateCourseMutation,
 } = adminApi;

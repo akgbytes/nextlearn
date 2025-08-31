@@ -55,5 +55,10 @@ export const createCourseSchema = z.object({
   }),
 });
 
+export const editCourseSchema = createCourseSchema.partial();
+
 export const validateCreateCourse = (data: unknown) =>
   createCourseSchema.safeParse(data);
+
+export const validateEditCourse = (data: unknown) =>
+  editCourseSchema.safeParse(data);

@@ -16,7 +16,8 @@ import VerifyEmail from "@/pages/auth/VerifyEmail";
 
 import AdminDashboard from "@/pages/admin/AdminDashboard";
 import AdminCourses from "@/pages/admin/AdminCourses";
-import CourseCreation from "@/pages/admin/CreateCourse";
+import CreateCourse from "@/pages/admin/CreateCourse";
+import EditCourse from "@/pages/admin/EditCourse";
 
 const AppRoutes = () => {
   return (
@@ -42,7 +43,8 @@ const AppRoutes = () => {
           <Route element={<AdminLayout />}>
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/courses" element={<AdminCourses />} />
-            <Route path="/admin/courses/create" element={<CourseCreation />} />
+            <Route path="/admin/courses/create" element={<CreateCourse />} />
+            <Route path="/admin/courses/:id/edit" element={<EditCourse />} />
           </Route>
         </Route>
       </Route>

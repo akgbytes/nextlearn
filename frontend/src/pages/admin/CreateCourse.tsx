@@ -102,7 +102,7 @@ export const courseFormSchema = z.object({
 
 export type CourseFormValues = z.infer<typeof courseFormSchema>;
 
-const CourseCreation = () => {
+const CreateCourse = () => {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const [createCourse, { isLoading }] = useCreateCourseMutation();
@@ -394,4 +394,4 @@ const CourseCreation = () => {
   );
 };
 
-export default CourseCreation;
+export default CreateCourse;
