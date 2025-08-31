@@ -31,6 +31,13 @@ const adminApi = api.injectEndpoints({
         method: "GET",
       }),
     }),
+
+    getCourse: builder.query<ApiResponse<Course>, { id: string }>({
+      query: ({ id }) => ({
+        url: `${BASE_URL}/courses/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -38,4 +45,6 @@ export const {
   useDeleteFileMutation,
   useCreateCourseMutation,
   useGetCoursesQuery,
+  useLazyGetCourseQuery,
+  useGetCourseQuery,
 } = adminApi;
