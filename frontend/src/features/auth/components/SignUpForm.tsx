@@ -24,10 +24,10 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
 
 import { Loader2, Send } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
+import { useSnackbar } from "notistack";
 
 const signUpFormSchema = z.object({
   name: z.string().min(1, { error: "Name is required" }),
@@ -38,6 +38,7 @@ const signUpFormSchema = z.object({
 type SignUpFormValues = z.infer<typeof signUpFormSchema>;
 
 const SignUpForm = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const [isGoogleLoginPending, startGoogleLoginTransition] = useTransition();
 
   const form = useForm<SignUpFormValues>({
@@ -60,7 +61,9 @@ const SignUpForm = () => {
 
       fetchOptions: {
         onError: (ctx) => {
-          toast.error(ctx.error.message || "Internal Server Error");
+          enqueueSnackbar(ctx.error.message || "Internal Server Error", {
+            variant: "error",
+          });
         },
       },
     });
@@ -73,10 +76,14 @@ const SignUpForm = () => {
         callbackURL: `${import.meta.env.VITE_FRONTEND_URL}`,
         fetchOptions: {
           onSuccess: () => {
-            toast.success("Signed in with Google, redirecting...");
+            enqueueSnackbar("Signed in with Google, redirecting...", {
+              variant: "success",
+            });
           },
           onError: (ctx) => {
-            toast.error(ctx.error.message || "Internal Server Error");
+            enqueueSnackbar(ctx.error.message || "Internal Server Error", {
+              variant: "error",
+            });
           },
         },
       });

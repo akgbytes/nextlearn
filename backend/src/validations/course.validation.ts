@@ -24,8 +24,7 @@ export const createCourseSchema = z.object({
 
   price: z.coerce
     .number<number>()
-    .int()
-    .positive({ error: "Price must be not be negative" }),
+    .min(0, { error: "Price must be not be negative" }),
 
   duration: z.coerce
     .number<number>()
@@ -42,17 +41,17 @@ export const createCourseSchema = z.object({
     }),
 
   level: z.enum(CourseLevel, {
-    error: (issue): string =>
-      `Invalid level, expected ${Object.values(CourseLevel)}, received ${
-        issue.input
-      }`,
+    error: (issue) =>
+      `Invalid level, Expected ${Object.values(CourseLevel).join(
+        " | "
+      )}, Received ${issue.input}`,
   }),
 
   status: z.enum(CourseStatus, {
-    error: (issue): string =>
-      `Invalid status, expected ${Object.values(CourseStatus)}, received ${
-        issue.input
-      }`,
+    error: (issue) =>
+      `Invalid level, Expected ${Object.values(CourseStatus).join(
+        " | "
+      )}, Received ${issue.input}`,
   }),
 });
 

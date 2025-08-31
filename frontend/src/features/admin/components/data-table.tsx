@@ -48,7 +48,6 @@ import {
   type VisibilityState,
 } from "@tanstack/react-table";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
-import { toast } from "sonner";
 import { z } from "zod";
 
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -98,6 +97,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { enqueueSnackbar } from "notistack";
 
 export const schema = z.object({
   id: z.number(),
@@ -201,11 +201,7 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          toast.promise(new Promise((resolve) => setTimeout(resolve, 1000)), {
-            loading: `Saving ${row.original.header}`,
-            success: "Done",
-            error: "Error",
-          });
+          enqueueSnackbar(`Saving ${row.original.header}`, { variant: "info" });
         }}
       >
         <Label htmlFor={`${row.original.id}-target`} className="sr-only">
@@ -226,10 +222,9 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          toast.promise(new Promise((resolve) => setTimeout(resolve, 1000)), {
-            loading: `Saving ${row.original.header}`,
-            success: "Done",
-            error: "Error",
+
+          enqueueSnackbar(`Saving ${row.original.header}`, {
+            variant: "success",
           });
         }}
       >

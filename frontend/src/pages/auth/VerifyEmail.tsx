@@ -11,9 +11,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
+import { useSnackbar } from "notistack";
 
 const VerifyEmail = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
@@ -37,11 +38,14 @@ const VerifyEmail = () => {
       fetchOptions: {
         onSuccess: () => {
           setLoading(false);
-          toast.success("Verification email sent");
+
+          enqueueSnackbar("Verification email sent", { variant: "success" });
         },
         onError: (ctx) => {
           setStatus("error");
-          toast.error(ctx.error.message || "Error sending email");
+          enqueueSnackbar(ctx.error.message || "Error sending email", {
+            variant: "error",
+          });
         },
       },
     });
@@ -59,11 +63,17 @@ const VerifyEmail = () => {
         onSuccess: () => {
           setStatus("success");
           setTimeout(() => navigate("/signin"), 2000);
-          toast.success("Email verified successfully");
+
+          enqueueSnackbar("Email verified successfully", {
+            variant: "success",
+          });
         },
         onError: (ctx) => {
           setStatus("error");
-          toast.error(ctx.error.message || "Error verifying email");
+
+          enqueueSnackbar(ctx.error.message || "Error verifying email", {
+            variant: "error",
+          });
         },
       },
     });

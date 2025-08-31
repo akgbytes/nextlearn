@@ -6,7 +6,7 @@ export type CourseStatus = (typeof CourseStatus)[keyof typeof CourseStatus];
 
 export interface BaseResponse {
   message: string;
-  code: number;
+  statusCode: number;
   success: boolean;
 }
 

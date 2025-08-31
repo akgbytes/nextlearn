@@ -4,8 +4,7 @@ export class ApiResponse<T> {
   constructor(
     public readonly statusCode: number,
     public readonly message: string,
-    public readonly data: T,
-    public readonly meta?: Record<string, unknown>
+    public readonly data: T
   ) {
     this.success = statusCode < 400;
   }

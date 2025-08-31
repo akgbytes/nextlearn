@@ -1,6 +1,6 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-
+import { admin } from "better-auth/plugins";
 import { prisma } from "@/configs/db";
 import { env } from "@/configs/env";
 import { resend } from "@/utils/resendClient";
@@ -9,17 +9,6 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
-
-  user: {
-    additionalFields: {
-      role: {
-        type: "string",
-        required: false,
-        defaultValue: "user",
-        input: false, // don't allow user to set role
-      },
-    },
-  },
 
   socialProviders: {
     google: {
@@ -113,4 +102,6 @@ export const auth = betterAuth({
       },
     },
   },
+
+  plugins: [admin()],
 });

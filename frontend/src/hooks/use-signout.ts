@@ -1,18 +1,19 @@
 import { signOut } from "@/lib/auth-client";
+import { useSnackbar } from "notistack";
 import { useNavigate } from "react-router";
-import { toast } from "sonner";
 
 export const useSignOut = () => {
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
   const handleSignOut = () => {
     signOut({
       fetchOptions: {
         onSuccess: () => {
           navigate("/");
-          toast.success("Signed out successfully");
+          enqueueSnackbar("Signed out successfully", { variant: "success" });
         },
         onError: () => {
-          toast.success("Failed to sign out");
+          enqueueSnackbar("Failed to sign out", { variant: "error" });
         },
       },
     });

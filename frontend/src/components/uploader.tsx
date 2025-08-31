@@ -3,11 +3,11 @@ import { useDropzone } from "react-dropzone";
 import { useUploadThing } from "@/lib/uploadthing";
 import { Progress } from "@/components/ui/progress";
 import { CloudUpload, Loader2, XIcon } from "lucide-react";
-import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { useDeleteFileMutation } from "@/features/admin/adminApi";
+import { useSnackbar } from "notistack";
 
 type UploaderProps = {
   value: string | undefined;
@@ -23,6 +23,7 @@ interface UploaderState {
 }
 
 export function Uploader({ value, onChange }: UploaderProps) {
+  const { enqueueSnackbar } = useSnackbar();
   const [deleteFile, { isLoading }] = useDeleteFileMutation();
   const [fileState, setFileState] = useState<UploaderState>({
     file: null,
@@ -44,10 +45,8 @@ export function Uploader({ value, onChange }: UploaderProps) {
           };
         });
 
-        console.log("url:", res[0].ufsUrl);
-
         onChange(res[0].ufsUrl);
-        toast.success("File uploaded successfully");
+        enqueueSnackbar("File uploaded successfully", { variant: "success" });
       }
     },
 
@@ -61,7 +60,7 @@ export function Uploader({ value, onChange }: UploaderProps) {
         };
       });
 
-      toast.error(err.message || "Upload failed, please try again.");
+      enqueueSnackbar("Upload failed, Please try again.", { variant: "error" });
     },
 
     onUploadBegin: () => {
@@ -129,7 +128,7 @@ export function Uploader({ value, onChange }: UploaderProps) {
           };
         });
 
-        toast.error("Something went wrong");
+        enqueueSnackbar("Something went wrong", { variant: "error" });
       }
 
       clearInterval(interval);
@@ -163,10 +162,12 @@ export function Uploader({ value, onChange }: UploaderProps) {
 
         onChange(undefined);
 
-        toast.success("File deleted successfully");
+        enqueueSnackbar("File deleted successfully", { variant: "success" });
       }
     } catch (err) {
-      toast.error("Failed to delete file, please try again.");
+      enqueueSnackbar("Failed to delete file, Please try again.", {
+        variant: "error",
+      });
     }
   };
 
@@ -192,13 +193,21 @@ export function Uploader({ value, onChange }: UploaderProps) {
         );
 
         if (tooManyFiles) {
-          toast.error("Too many files selected, max is 1");
+          enqueueSnackbar("Too many files selected, max is 1", {
+            variant: "error",
+          });
         } else if (fileSizeTooLarge) {
-          toast.error("Max file size exceeded");
+          enqueueSnackbar("Max file size exceeded", {
+            variant: "error",
+          });
         } else if (invalidFileType) {
-          toast.error("Only image files are allowed");
+          enqueueSnackbar("Only image files are allowed", {
+            variant: "error",
+          });
         } else {
-          toast.error(fileRejection[0].errors[0].message);
+          enqueueSnackbar(fileRejection[0].errors[0].message, {
+            variant: "error",
+          });
         }
       }
     },

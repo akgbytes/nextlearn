@@ -34,8 +34,14 @@ import Tiptap from "@/components/text-editor/tiptap";
 
 import { Plus, Sparkle } from "lucide-react";
 import { Uploader } from "@/components/uploader";
-import { toast } from "sonner";
+
 import { capitalize } from "@/utils/capitalize";
+import { useCreateCourseMutation } from "@/features/admin/adminApi";
+import { tryCatch } from "@/utils/try-catch";
+import { handleApiError } from "@/utils/error";
+import { useSnackbar } from "notistack";
+import { useNavigate } from "react-router";
+import Spinner from "@/components/spinner";
 
 export const courseFormSchema = z.object({
   title: z
@@ -97,6 +103,9 @@ export const courseFormSchema = z.object({
 export type CourseFormValues = z.infer<typeof courseFormSchema>;
 
 const CourseCreation = () => {
+  const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
+  const [createCourse, { isLoading }] = useCreateCourseMutation();
   const form = useForm<CourseFormValues>({
     resolver: zodResolver(courseFormSchema),
     defaultValues: {
@@ -113,7 +122,24 @@ const CourseCreation = () => {
     },
   });
 
-  function onSubmit(values: CourseFormValues) {}
+  async function onSubmit(values: CourseFormValues) {
+    console.log("course form data: ", values);
+
+    const { data, error } = await tryCatch(createCourse(values).unwrap());
+
+    if (error) {
+      handleApiError(error);
+    }
+
+    if (data) {
+      enqueueSnackbar(data.message || "Course created successfully", {
+        variant: "success",
+      });
+      form.reset();
+      navigate("/admin/courses");
+      console.log("success :", data);
+    }
+  }
 
   return (
     <>
@@ -167,7 +193,10 @@ const CourseCreation = () => {
                           onClick={() => {
                             const title = form.getValues("title");
                             if (!title || title.length < 2) {
-                              return toast.error("Fill a valid title first");
+                              return enqueueSnackbar(
+                                "Fill a valid title first",
+                                { variant: "error" }
+                              );
                             }
                             const slug = slugify(title, { lower: true });
                             form.setValue("slug", slug, {
@@ -345,8 +374,17 @@ const CourseCreation = () => {
                 )}
               />
 
-              <Button type="submit">
-                Create Course <Plus className="size-4" />
+              <Button type="submit" disabled={isLoading}>
+                {isLoading ? (
+                  <>
+                    Creating ...
+                    <Spinner />
+                  </>
+                ) : (
+                  <>
+                    Create Course <Plus className="size-4" />
+                  </>
+                )}
               </Button>
             </form>
           </Form>

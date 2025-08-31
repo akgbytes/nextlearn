@@ -23,10 +23,10 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
 
 import { Loader2, Send } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
+import { useSnackbar } from "notistack";
 
 const signInFormSchema = z.object({
   email: z.email(),
@@ -36,6 +36,7 @@ const signInFormSchema = z.object({
 type SignInFormValues = z.infer<typeof signInFormSchema>;
 
 const SignInForm = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const [isGoogleLoginPending, startGoogleLoginTransition] = useTransition();
 
   const form = useForm<SignInFormValues>({
@@ -54,11 +55,16 @@ const SignInForm = () => {
 
       fetchOptions: {
         onSuccess: () => {
-          toast.success("Signed in successfully");
+          enqueueSnackbar("Signed in successfully", { variant: "success" });
         },
         onError: (ctx) => {
-          if (ctx.error.status === 403) alert("Please verify your email");
-          else toast.error(ctx.error.message || "Failed to sign in");
+          if (ctx.error.status === 403) {
+            enqueueSnackbar("Please verify your email", { variant: "error" });
+          } else {
+            enqueueSnackbar(ctx.error.message || "Failed to sign in", {
+              variant: "error",
+            });
+          }
         },
       },
     });
@@ -71,10 +77,14 @@ const SignInForm = () => {
         callbackURL: `${import.meta.env.VITE_FRONTEND_URL}`,
         fetchOptions: {
           onSuccess: () => {
-            toast.success("Signed in with Google, redirecting...");
+            enqueueSnackbar("Signed in with Google, redirecting...", {
+              variant: "success",
+            });
           },
           onError: ({ error }) => {
-            toast.error(error.message || "Internal Server Error");
+            enqueueSnackbar(error.message || "Internal Server Error", {
+              variant: "error",
+            });
           },
         },
       });

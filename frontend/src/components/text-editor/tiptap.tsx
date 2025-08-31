@@ -24,7 +24,8 @@ const Tiptap = ({ field }: TiptapProps) => {
     editorProps: {
       attributes: {
         class:
-          "min-h-[300px] p-4 focus:outline-none prose prose-sm sm:prose dark:prose-invert !w-full !max-w-none !leading-1",
+          "min-h-[300px] p-4 focus:outline-none prose prose-sm sm:prose dark:prose-invert !w-full !max-w-none [&>*]:my-0",
+        style: "white-space: pre-wrap; word-break: break-word;",
       },
     },
 

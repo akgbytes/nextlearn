@@ -252,7 +252,7 @@ export const errorHandler = (
   }
 
   res.status(apiError.statusCode).json({
-    code: apiError.statusCode,
+    statusCode: apiError.statusCode,
     message: apiError.message,
     data: apiError.data,
     success: apiError.success,
